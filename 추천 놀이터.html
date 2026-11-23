@@ -1,0 +1,289 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>추천 놀이터</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: one phone-sized column, four tabs at the bottom, one small task per screen */
+:root{
+  --bg:#F3F7F6; --card:#FFFFFF; --ink:#16302D; --mute:#5B7571; --line:#D5E3E0;
+  --teal:#0F6E66; --teal-soft:#DCEFEC; --amber:#C97500; --amber-soft:#FBEBD0;
+  --ok:#1B7F4B; --ok-soft:#DDF3E6; --bad:#B3322B; --bad-soft:#FBE3E0;
+  --on:#FFFFFF; --font:"Noto Sans KR","Pretendard","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1D1B; --card:#172A27; --ink:#E6F2F0; --mute:#9DB8B3; --line:#2C4743;
+  --teal:#4FC3B7; --teal-soft:#1D3B37; --amber:#F2B04A; --amber-soft:#3A2D14;
+  --ok:#5ED394; --ok-soft:#173A2A; --bad:#FF8A80; --bad-soft:#3F1F1D; --on:#0A1A18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1D1B; --card:#172A27; --ink:#E6F2F0; --mute:#9DB8B3; --line:#2C4743;
+  --teal:#4FC3B7; --teal-soft:#1D3B37; --amber:#F2B04A; --amber-soft:#3A2D14;
+  --ok:#5ED394; --ok-soft:#173A2A; --bad:#FF8A80; --bad-soft:#3F1F1D; --on:#0A1A18; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 96px}
+main{max-width:560px;margin:0 auto}
+h1{font-size:26px;line-height:1.25;margin:0 0 4px;font-weight:900;text-wrap:balance}
+h2{font-size:20px;margin:0 0 6px;font-weight:900;text-wrap:balance}
+p{margin:0 0 10px}
+.lead{color:var(--mute);margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;min-width:0}
+.tag{display:inline-block;background:var(--teal-soft);color:var(--teal);border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;margin:0 4px 4px 0}
+.tag.new{background:var(--amber-soft);color:var(--amber)}
+.tag.off{background:transparent;border:1px dashed var(--line);color:var(--mute)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.seg{display:flex;gap:6px;margin:10px 0 14px}
+.seg button{flex:1;min-width:0;padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:var(--on)}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;font:inherit;min-width:0}
+.opt b{font-weight:900}
+.opt small{display:block;color:var(--mute);font-size:13px}
+.opt.good{background:var(--ok-soft);border-color:var(--ok)}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad)}
+.opt:disabled{opacity:1}
+.btn{background:var(--teal);color:var(--on);border:0;border-radius:12px;padding:12px 16px;font:inherit;font-weight:700}
+.btn.ghost{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.msg{border-radius:12px;padding:10px 12px;margin:8px 0;font-size:15px}
+.msg.good{background:var(--ok-soft);color:var(--ok)}
+.msg.bad{background:var(--bad-soft);color:var(--bad)}
+.msg.info{background:var(--amber-soft);color:var(--amber)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left}
+th{color:var(--mute);font-weight:700;font-size:13px}
+.scroll{overflow-x:auto}
+.meter{display:flex;gap:4px;margin:8px 0}
+.meter i{flex:1;height:12px;border-radius:6px;background:var(--line)}
+.meter i.on{background:var(--teal)}
+.big{font-size:34px;font-weight:900;color:var(--teal);line-height:1.1}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));gap:4px}
+nav button{flex:1;min-width:0;background:transparent;border:0;color:var(--mute);font:inherit;font-size:12px;font-weight:700;padding:6px 2px;border-radius:10px}
+nav button b{display:block;font-size:20px;line-height:1.1}
+nav button[aria-current="page"]{color:var(--teal);background:var(--teal-soft)}
+.check{display:flex;gap:12px;align-items:flex-start}
+.check input{width:24px;height:24px;margin-top:2px;flex:none;accent-color:var(--teal)}
+.check label{min-width:0}
+.check small{display:block;color:var(--mute);font-size:14px}
+a{color:var(--teal);font-weight:700}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){.opt.bad{animation:nudge .25s}@keyframes nudge{30%{transform:translateX(-5px)}70%{transform:translateX(5px)}}}
+</style>
+
+<main>
+<header>
+  <h1>추천 놀이터</h1>
+  <p class="lead">13주차 · 추천시스템. 내 폰으로 눌러 보며 이해해요. 입력한 내용은 어디에도 저장되거나 전송되지 않아요.</p>
+</header>
+
+<section id="engine" hidden></section>
+<section id="bubble" hidden></section>
+<section id="cards" hidden></section>
+<section id="check" hidden></section>
+</main>
+
+<nav aria-label="활동 선택">
+  <button data-go="engine"><b>①</b>추천 엔진</button>
+  <button data-go="bubble"><b>②</b>거품 키우기</button>
+  <button data-go="cards"><b>③</b>방식 맞히기</button>
+  <button data-go="check"><b>④</b>내 폰 확인</button>
+</nav>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+
+  /* ---------- tabs ---------- */
+  var tabs=['engine','bubble','cards','check'];
+  function show(id){
+    if(tabs.indexOf(id)<0)id='engine';
+    tabs.forEach(function(t){$('#'+t).hidden=(t!==id)});
+    document.querySelectorAll('nav button').forEach(function(b){
+      if(b.dataset.go===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+    try{if(location.hash!=='#'+id)history.replaceState(null,'','#'+id)}catch(e){}
+    window.scrollTo(0,0);
+  }
+  document.querySelector('nav').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-go]');if(b)show(b.dataset.go)});
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+
+  /* ---------- ① 추천 엔진 되어 보기 ---------- */
+  var users={'민준':['A','F','C'],'서연':['A','F','G'],'지호':['B','G','H'],'하은':['G','B','H'],'나':['A','C']};
+  var vids={
+    A:{t:'자취 요리 입문',tags:['음식','요리']},B:{t:'10분 홈트레이닝',tags:['운동']},
+    C:{t:'편의점 신상 리뷰',tags:['음식','편의점']},D:{t:'주식 기초',tags:['경제']},
+    F:{t:'한식 레시피',tags:['음식','요리']},G:{t:'아침 스트레칭',tags:['운동']},H:{t:'코딩 입문',tags:['프로그래밍']}};
+  var seen=users['나'];
+  var myTags=[];seen.forEach(function(k){vids[k].tags.forEach(function(t){if(myTags.indexOf(t)<0)myTags.push(t)})});
+  var cand=Object.keys(vids).filter(function(k){return seen.indexOf(k)<0});
+  function viewers(k){return Object.keys(users).filter(function(u){return u!=='나'&&users[u].indexOf(k)>=0})}
+  function overlapTags(k){return vids[k].tags.filter(function(t){return myTags.indexOf(t)>=0}).length}
+  function common(u){return users[u].filter(function(k){return seen.indexOf(k)>=0}).length}
+  var others=Object.keys(users).filter(function(u){return u!=='나'});
+  var bestUser=others.slice().sort(function(a,b){return common(b)-common(a)})[0];
+  var rules={
+    content:{name:'콘텐츠 기반',q:'내가 본 영상의 태그와 가장 많이 겹치는 영상은?',
+      ok:function(k){var m=Math.max.apply(null,cand.map(overlapTags));return overlapTags(k)===m},
+      hint:function(k){return '겹친 태그 '+overlapTags(k)+'개'},
+      why:'내가 본 A, C의 태그는 '+myTags.join('·')+'이에요. 안 본 영상 중 태그가 가장 많이 겹치는 건 F(음식·요리 2개)예요.'},
+    collab:{name:'협업 필터링',q:'나와 가장 많이 겹치는 사람이 본 것 중, 내가 안 본 영상은?',
+      ok:function(k){return users[bestUser].indexOf(k)>=0},
+      hint:function(k){return '본 사람: '+(viewers(k).join(', ')||'없음')},
+      why:'나와 겹치는 영상 수는 '+others.map(function(u){return u+' '+common(u)}).join(', ')+'. 가장 닮은 '+bestUser+'이 본 것 중 내가 안 본 영상은 F예요.'},
+    pop:{name:'인기도 기반',q:'내가 안 본 것 중 가장 많은 사람이 본 영상은?',
+      ok:function(k){var m=Math.max.apply(null,cand.map(function(x){return viewers(x).length}));return viewers(k).length===m},
+      hint:function(k){return viewers(k).length+'명이 봄'},
+      why:'안 본 영상의 시청 인원은 '+cand.map(function(k){return k+' '+viewers(k).length+'명'}).join(', ')+'. 가장 많은 G예요.'}
+  };
+  var order=['content','collab','pop'];
+  var eng={rule:'content',done:{},picked:{},hint:false};
+  function renderEngine(){
+    var r=rules[eng.rule];
+    var h='<h2>① 내가 추천 엔진이 되어 봐요</h2>'
+      +'<p class="lead">‘나’는 <b>A, C</b>를 본 사용자예요. 안 본 영상을 규칙대로 골라 주세요.</p>'
+      +'<div class="seg" role="group" aria-label="추천 규칙">'
+      +order.map(function(k){return '<button data-rule="'+k+'" aria-pressed="'+(k===eng.rule)+'">'+rules[k].name+(eng.done[k]?' ✓':'')+'</button>'}).join('')+'</div>'
+      +'<div class="card"><h2>'+esc(r.q)+'</h2>'
+      +'<button class="btn ghost" data-hint="1" style="margin:6px 0 12px">'+(eng.hint?'힌트 숨기기':'힌트 보기')+'</button>';
+    if(eng.hint&&eng.rule==='collab'){
+      h+='<div class="msg info">나와 겹치는 영상 수: '+others.map(function(u){return '<b>'+u+'</b> '+common(u)+'개 ('+users[u].join(',')+')'}).join(' · ')+'</div>'}
+    if(eng.hint&&eng.rule==='content'){h+='<div class="msg info">내 태그: '+myTags.join(', ')+'</div>'}
+    cand.forEach(function(k){
+      var state='';var p=eng.picked[eng.rule];
+      if(p&&p.indexOf(k)>=0)state=r.ok(k)?' good':' bad';
+      if(eng.done[eng.rule]&&r.ok(k))state=' good';
+      h+='<button class="opt'+state+'" data-pick="'+k+'" '+(eng.done[eng.rule]?'disabled':'')+'><b>'+k+'</b> '+esc(vids[k].t)
+        +'<small>태그: '+vids[k].tags.join(', ')+(eng.hint?' · '+r.hint(k):'')+'</small></button>'});
+    var p=eng.picked[eng.rule];
+    if(eng.done[eng.rule])h+='<div class="msg good"><b>정답!</b> '+esc(r.why)+'</div>';
+    else if(p&&p.length)h+='<div class="msg bad">아쉬워요. 힌트를 열어 숫자를 비교해 보세요.</div>';
+    h+='</div>';
+    if(order.every(function(k){return eng.done[k]})){
+      var ans=order.map(function(k){return cand.filter(rules[k].ok).join('/')});
+      h+='<div class="card"><h2>세 결과를 비교해 봐요</h2><p>콘텐츠 기반 <b>'+ans[0]+'</b> · 협업 필터링 <b>'+ans[1]+'</b> · 인기도 기반 <b>'+ans[2]+'</b></p>'
+        +'<p>같은 기록인데도 무엇을 보느냐에 따라 추천이 달라져요. 추천은 정답이 아니라 규칙의 결과예요.</p></div>'}
+    $('#engine').innerHTML=h;
+  }
+  $('#engine').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    if(b.dataset.rule){eng.rule=b.dataset.rule;eng.hint=false}
+    else if(b.dataset.hint){eng.hint=!eng.hint}
+    else if(b.dataset.pick){
+      var r=rules[eng.rule];eng.picked[eng.rule]=(eng.picked[eng.rule]||[]).concat(b.dataset.pick);
+      if(r.ok(b.dataset.pick))eng.done[eng.rule]=true}
+    renderEngine()});
+
+  /* ---------- ② 거품 키우기 ---------- */
+  var cat=[
+    ['자취 요리 입문',['음식','요리']],['편의점 신상 리뷰',['음식','편의점']],
+    ['한식 레시피',['음식','요리']],['라면 끓이기 꿀팁',['음식','요리']],['편의점 도시락 순위',['음식','편의점']],
+    ['10분 홈트레이닝',['운동']],['아침 스트레칭',['운동']],['주식 기초',['경제']],['코딩 입문',['프로그래밍']],
+    ['제주 당일 여행',['여행']],['출근길 플레이리스트',['음악']],['맛집 투어 브이로그',['음식','여행']]];
+  var ALL=['음식','요리','편의점','운동','경제','프로그래밍','여행','음악'];
+  var MAXR=5;var bub;var results={off:null,on:null};
+  function tagsOf(set){var o=[];set.forEach(function(i){cat[i][1].forEach(function(t){if(o.indexOf(t)<0)o.push(t)})});return o}
+  function resetBub(div){bub={div:div,seen:[0,1],round:0,last:[]}}
+  function recs(){
+    var st=tagsOf(bub.seen);
+    var un=cat.map(function(_,i){return i}).filter(function(i){return bub.seen.indexOf(i)<0});
+    var scored=un.map(function(i){return {i:i,s:cat[i][1].filter(function(t){return st.indexOf(t)>=0}).length}});
+    var top=scored.filter(function(x){return x.s>0}).sort(function(a,b){return b.s-a.s||a.i-b.i}).slice(0,3).map(function(x){return {i:x.i,mix:false}});
+    if(bub.div){
+      var wild=scored.filter(function(x){return x.s===0}).map(function(x){return x.i});
+      if(wild.length){var w=wild[(bub.round*2)%wild.length];top=top.slice(0,2);top.push({i:w,mix:true})}}
+    return top}
+  function renderBub(){
+    var st=tagsOf(bub.seen);
+    var h='<h2>② 추천만 따라가 보면?</h2>'
+      +'<p class="lead">출발은 <b>자취 요리 입문</b>과 <b>편의점 신상 리뷰</b>를 본 상태예요. 추천 영상을 눌러 따라가며 만나는 태그를 세어 보세요. ('+MAXR+'라운드)</p>'
+      +'<div class="seg" role="group" aria-label="추천 방식"><button data-div="0" aria-pressed="'+(!bub.div)+'">추천만 따라가기</button>'
+      +'<button data-div="1" aria-pressed="'+bub.div+'">다양하게 섞어 주기</button></div>'
+      +'<div class="card"><p style="margin:0">만난 태그 종류 <span class="big">'+st.length+'</span> / '+ALL.length+'</p>'
+      +'<div class="meter" aria-hidden="true">'+ALL.map(function(t){return '<i class="'+(st.indexOf(t)>=0?'on':'')+'"></i>'}).join('')+'</div>'
+      +'<div>'+ALL.map(function(t){return '<span class="tag'+(st.indexOf(t)>=0?'':' off')+(bub.last.indexOf(t)>=0?' new':'')+'">'+t+'</span>'}).join('')+'</div></div>';
+    if(bub.round<MAXR){
+      var rs=recs();
+      h+='<div class="card"><h2>'+(bub.round+1)+'라운드 · 다음 영상 추천</h2>';
+      if(!rs.length)h+='<div class="msg info">더 추천할 영상이 없어요. 태그가 겹치는 영상을 다 봤어요.</div>';
+      rs.forEach(function(x){h+='<button class="opt" data-watch="'+x.i+'"><b>'+esc(cat[x.i][0])+'</b><small>태그: '+cat[x.i][1].join(', ')+(x.mix?' · 섞어 주기 추천':'')+'</small></button>'});
+      if(!rs.length)h+='<button class="btn" data-skip="1">다음 라운드</button>';
+      h+='</div>'}
+    else{
+      results[bub.div?'on':'off']=st.length;
+      h+='<div class="card"><h2>결과</h2><p>'+(bub.div?'섞어 주기':'추천만 따라가기')+'로 '+MAXR+'라운드를 보내니 태그 <b>'+st.length+'종</b>을 만났어요.</p>'
+        +(results.off!==null&&results.on!==null?'<div class="msg info">추천만 따라가기 '+results.off+'종 · 섞어 주기 '+results.on+'종. 추천을 섞어 주면 거품이 줄어요.</div>':'<div class="msg info">위에서 다른 방식을 눌러 비교해 보세요.</div>')
+        +'<button class="btn" data-reset="1">같은 방식으로 다시 하기</button></div>'}
+    $('#bubble').innerHTML=h}
+  $('#bubble').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    if(b.dataset.div!==undefined){resetBub(b.dataset.div==='1')}
+    else if(b.dataset.watch){var before=tagsOf(bub.seen);bub.seen.push(+b.dataset.watch);
+      bub.last=tagsOf(bub.seen).filter(function(t){return before.indexOf(t)<0});bub.round++}
+    else if(b.dataset.skip){bub.round++;bub.last=[]}
+    else if(b.dataset.reset){resetBub(bub.div)}
+    renderBub()});
+
+  /* ---------- ③ 방식 맞히기 ---------- */
+  var cards=[
+    ['내가 본 요리 영상과 같은 태그의 영상 추천','content','내가 본 것의 특징(태그)이 닮았어요.'],
+    ['나와 시청 기록이 비슷한 사람이 많이 본 영상','collab','비슷한 사람의 행동을 빌려 왔어요.'],
+    ['이번 주 가장 많이 본 영상 TOP 10','pop','모두에게 같은 순위를 보여 줘요.'],
+    ['내가 들은 곡과 분위기가 비슷한 곡 자동 재생','content','곡의 장르·분위기라는 특징이 닮았어요.'],
+    ['나와 구매 이력이 비슷한 고객이 산 상품','collab','구매 이력이 비슷한 사람의 선택을 빌렸어요.'],
+    ['실시간 인기 검색어 순위','pop','내 기록과 상관없이 모두에게 같은 목록이에요.']];
+  var names={content:'콘텐츠 기반',collab:'협업 필터링',pop:'인기도 기반'};
+  var cs;function resetCards(){cs={i:0,score:0,ans:null}}
+  function renderCards(){
+    var h='<h2>③ 이건 어떤 방식일까?</h2>';
+    if(cs.i>=cards.length){
+      h+='<div class="card"><p class="big">'+cs.score+' / '+cards.length+'</p><p>'+(cs.score>=5?'거의 다 맞혔어요. 세 방식을 구분할 수 있어요.':'구분 열쇠를 떠올려 보세요. 내용이 닮았나, 비슷한 사람인가, 모두의 인기인가.')+'</p><button class="btn" data-again="1">다시 하기</button></div>'}
+    else{
+      var c=cards[cs.i];
+      h+='<p class="lead">'+(cs.i+1)+' / '+cards.length+'번 카드</p><div class="card"><h2>'+esc(c[0])+'</h2>';
+      Object.keys(names).forEach(function(k){
+        var st='';if(cs.ans){if(k===c[1])st=' good';else if(k===cs.ans)st=' bad'}
+        h+='<button class="opt'+st+'" data-ans="'+k+'" '+(cs.ans?'disabled':'')+'><b>'+names[k]+'</b></button>'});
+      if(cs.ans)h+='<div class="msg '+(cs.ans===c[1]?'good':'bad')+'"><b>'+(cs.ans===c[1]?'정답!':'정답은 '+names[c[1]])+'</b> '+c[2]+'</div><button class="btn" data-next="1">다음 카드</button>';
+      h+='</div>'}
+    $('#cards').innerHTML=h}
+  $('#cards').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    if(b.dataset.ans&&!cs.ans){cs.ans=b.dataset.ans;if(cs.ans===cards[cs.i][1])cs.score++}
+    else if(b.dataset.next){cs.i++;cs.ans=null}
+    else if(b.dataset.again){resetCards()}
+    renderCards()});
+
+  /* ---------- ④ 내 폰 확인 ---------- */
+  var items=[
+    ['watch','시청 기록 열어 보기','영상·음악 앱의 내 프로필에서 ‘시청 기록’(또는 재생 기록)을 열어요. 최근 본 5개와 지금 추천 화면이 닮았는지 눈으로만 비교해요.'],
+    ['activity','내 활동 열어 보기','구글 계정을 쓴다면 myactivity.google.com 에서 내가 남긴 검색·시청 기록을 볼 수 있어요.'],
+    ['ads','서비스가 추정한 내 관심사 보기','구글 계정은 myadcenter.google.com, 다른 서비스는 설정의 ‘광고’나 ‘맞춤 설정’ 메뉴에서 볼 수 있어요. 나와 맞는지 확인해요.'],
+    ['out','로그인 전 화면과 비교하기','같은 서비스를 시크릿 창이나 로그아웃 상태로 열어 첫 화면을 비교해요. 비교가 안 되는 서비스는 건너뛰어요.'],
+    ['follow','추천 따라가기 3번','첫 화면의 추천을 눌러 보고, 다음 영상 추천을 연속으로 3번 눌러요. 나온 주제를 활동지 3에 적어요.']];
+  var store={};
+  try{store=JSON.parse(localStorage.getItem('chk12')||'{}')||{}}catch(e){store={}}
+  function renderCheck(){
+    var done=items.filter(function(x){return store[x[0]]}).length;
+    var h='<h2>④ 내 폰으로 확인해요</h2><p class="lead">내 기록은 나만 봐요. 캡처해서 보내거나 다른 사람에게 보여 주지 않아요. 기록을 지우거나 바꾸는 건 오늘 하지 않아요.</p>'
+      +'<div class="msg info">메뉴 이름은 앱과 버전마다 조금씩 달라요. 비슷한 이름의 메뉴를 찾으면 돼요. 완료 '+done+' / '+items.length+'</div>';
+    items.forEach(function(x){
+      var link='';
+      if(x[0]==='activity')link='<small><a href="https://myactivity.google.com" target="_blank" rel="noopener">myactivity.google.com 열기</a></small>';
+      if(x[0]==='ads')link='<small><a href="https://myadcenter.google.com" target="_blank" rel="noopener">myadcenter.google.com 열기</a></small>';
+      h+='<div class="card check"><input type="checkbox" id="c_'+x[0]+'" data-k="'+x[0]+'" '+(store[x[0]]?'checked':'')+'>'
+        +'<label for="c_'+x[0]+'"><b>'+x[1]+'</b><small>'+x[2]+'</small></label></div>'+(link?'<div style="margin:-6px 0 12px 8px">'+link+'</div>':'')});
+    $('#check').innerHTML=h}
+  $('#check').addEventListener('change',function(e){
+    var k=e.target.dataset&&e.target.dataset.k;if(!k)return;
+    store[k]=e.target.checked;
+    try{localStorage.setItem('chk12',JSON.stringify(store))}catch(x){}
+    var y=window.scrollY;renderCheck();window.scrollTo(0,y)});
+
+  resetBub(false);resetCards();
+  renderEngine();renderBub();renderCards();renderCheck();
+  show(location.hash.slice(1));
+})();
+</script>
+
+</body></html>
